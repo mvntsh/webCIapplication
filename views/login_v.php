@@ -29,7 +29,7 @@
         $(document).ready(function(){
             $(document).on("click","#btnLogin",function(e){
                 e.preventDefault();
-                alert("hello world.");
+                alert("You clicked me.");
             })
         })
     </script>
