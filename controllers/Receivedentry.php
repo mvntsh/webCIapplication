@@ -8,13 +8,15 @@
 		function __construct(){
 			parent::__construct();
 			$this->load->model("receivedentry_m");
+			$this->load->library('session');
 		}
 
 		function index(){
-			$data['title'] = 'Receiving Entry';
+			$data['title'] = 'View Requests';
 
 			$this->load->view("common/header",$data);
 			$this->load->view("common/userinfo");
+			$this->load->view("common/navigationapprover");
 			$this->load->view("receivedentry_v");
 			$this->load->view("common/footer");
 		}
@@ -25,6 +27,19 @@
 			$recipient = $this->input->post("txtnmUserdivision");
 
 			$data["data"] = $this->receivedentry_m->viewRequest_m($recipient);
+
+			if(count($data["data"])>0){
+				$data["success"] = true;
+			}
+			echo json_encode($data);
+		}
+
+		function viewRequestexe_c(){
+			$data["success"] = false;
+
+			$recipient = $this->input->post("txtnmUserdivision");
+
+			$data["data"] = $this->receivedentry_m->viewRequestexe_m($recipient);
 
 			if(count($data["data"])>0){
 				$data["success"] = true;
