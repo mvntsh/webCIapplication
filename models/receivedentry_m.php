@@ -19,6 +19,16 @@
 			}
 		}
 
+		function viewRequestexe_m($recipient){
+			$query = $this->db->query("SELECT *,CASE WHEN `marked`='2' THEN 'hidden' ELSE '' END AS modifyCheck FROM `tblrequest` WHERE recipient='$recipient' ORDER BY rfpno DESC;")->result_array();
+
+			if(count($query)>0){
+				return $query;
+			}else{
+				return array();
+			}
+		}
+
 		function viewRequestdate_m($daterequested,$recipient){
 			$query = $this->db->query("SELECT *,CASE WHEN `marked`='2' THEN 'hidden' ELSE '' END AS modifyCheck FROM `tblrequest` WHERE daterequested='$daterequested' AND recipient='$recipient' ORDER BY rfpno DESC;")->result_array();
 
