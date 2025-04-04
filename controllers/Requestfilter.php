@@ -8,6 +8,7 @@
 		function __construct(){
 			parent::__construct();
 			$this->load->model("requestfilter_m");
+			$this->load->library('session');
 		}
 
 		function index(){
