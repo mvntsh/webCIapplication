@@ -7,6 +7,7 @@
 		function __construct(){
 			parent::__construct();
 			$this->load->model("requestentry_m");
+			$this->load->library('session');
 		}
 
 		function index(){
