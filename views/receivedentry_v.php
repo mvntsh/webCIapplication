@@ -87,6 +87,40 @@
 								`;
 							})
 							$("#tblReceived tbody").html(tbody);
+						}else{
+							viewRequestexe_v();
+						}
+					}
+				})
+			}
+
+			function viewRequestexe_v(){
+				$.ajax({
+					type:'ajax',
+					method:'POST',
+					url:'Receivedentry/viewRequestexe_c',
+					data:$("#inputnmUserdivision").serialize(),
+					dataType:'json',
+					success:function(response){
+						if(response.success){
+							tbody = '';
+
+							response.data.forEach(function(sqldata){
+								tbody += `
+									<tr style="font-size: 12pt;">
+										<td style="text-align: center;">
+											<input data-requestid="${sqldata['request_id']}" type="checkbox" class="form-check-input mt-2" id="inputnmAction" style="border-color: #0292c7; color: #0292c7; cursor:pointer;" ${sqldata['modifyCheck']}>
+										</td>
+										<td style="text-align: center;">${sqldata['rfpno']}</td>
+										<td>${sqldata['payee']}</td>
+										<td style="text-align: center;">${sqldata['daterequested']}</td>
+										<td style="text-align: right;">${sqldata['amount']}</td>
+										<td>${sqldata['description']}</td>
+										<td>${sqldata['sender']}-${sqldata['division']} ${sqldata['region']}</td>
+									</tr>
+								`;
+							})
+							$("#tblReceived tbody").html(tbody);
 						}
 					}
 				})
@@ -273,15 +307,16 @@
 					dataType:'json',
 					success:function(response){
 						if(response.success){
-							console.log("1");
-						}else{
 							var inputnmUser = $("#inputnmUser").val();
-							$("#inputnmRequeststatus").val("Recieved by FD");
+							$("#inputnmRequeststatus").val("Received/Approved by "+inputnmUser);
 							updateStatus_c();
+						}else{
+
 						}
 					}
 				})
 			})
+			
 
 			function updateStatus_c(){
 				$.ajax({
@@ -292,7 +327,7 @@
 					dataType:'json',
 					success:function(response){
 						if(response.success){
-							$("#spanMessage").text("Received & File.");
+							$("#spanMessage").text("Approve/Received & File.");
 							systemAlert();
 							viewRequest_v();
 						}else{
